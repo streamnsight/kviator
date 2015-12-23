@@ -15,7 +15,7 @@ import (
 
 const (
 	appName = "kviator"
-	version = "0.0.5"
+	version = "0.0.6"
 
 	helpText = `
 	kviator is a cli client for accessing consul, etcd, or zookeper KV.
@@ -28,6 +28,9 @@ const (
 	    --kvstore     The kvstore to connect to. Can be consul, etcd, or zookeper.
 	    --client      The url of the kvstore. (eg. localhost:8500)
 	    --show-value  Show the value when using the list command.
+	    --ca-cert     The CA certificate to use for TLS
+	    --client-cert The Client cert to use for TLS authentication
+	    --client-key  The client key to use for TLS authentication
 
 	Commands:
 	    put           put a key value pair in the kvstore
@@ -57,6 +60,9 @@ const (
 var (
 	kvstore   string
 	client    string
+	caCert    string
+	clientCert string
+	clientKey  string
 	showValue bool
 )
 
@@ -64,6 +70,9 @@ func init() {
 	flag.StringVar(&kvstore, "kvstore", "", "the kvstore to connect to. Can be consul, etcd, or zookeper.")
 	flag.StringVar(&client, "client", "", "the client IP address")
 	flag.BoolVar(&showValue, "show-value", false, "show the value of the listed keys")
+	//flag.StringVar(&caCert, "ca-cert", "", "the path to the CA certificate to use for TLS")
+	//flag.StringVar(&clientCert, "client-cert", "", "the path to the client certificate to use for TLS")
+	//flag.StringVar(&clientKey, "client-key", "", "the path to the client key to use for TLS")
 	flag.Usage = help
 	flag.Parse()
 }
@@ -127,6 +136,24 @@ func kvstoreConn(kvstore, client string) store.Store {
 	case "zookeper":
 		backend = store.ZK
 	}
+/*
+	var cfg store.Config
+
+	if caCert != "" && clientCert != "" && clientKey != "" {
+		cfg = store.Config{
+			ConnectionTimeout: 10 * time.Second,
+			ClientTLS: &store.ClientTLSConfig{
+				CACertFile: caCert,
+				CertFile: clientCert,
+				KeyFile: clientKey,
+			},
+		}
+	} else {
+		cfg = store.Config{
+				ConnectionTimeout: 10 * time.Second,
+			}
+	}
+	*/
 	kv, err := libkv.NewStore(
 		backend,
 		[]string{client},
