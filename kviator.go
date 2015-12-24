@@ -8,9 +8,11 @@ import (
 	"time"
 
 	"io/ioutil"
+	"github.com/coreos/etcd/pkg/transport"
 
 	"github.com/docker/libkv"
 	"github.com/docker/libkv/store"
+	"net/http"
 )
 
 const (
@@ -140,13 +142,17 @@ func kvstoreConn(kvstore, client string) store.Store {
 	var cfg store.Config
 
 	if caCert != "" && clientCert != "" && clientKey != "" {
+		var tlsInfo = transport.TLSInfo{
+			CAFile:   caCert,
+			CertFile: clientCert,
+			KeyFile:  clientKey,
+		}
+		var t = *http.Transport
+		var err = error
+		t, err = transport.NewTransport(tlsInfo, 10 * time.Second)
 		cfg = store.Config{
 			ConnectionTimeout: 10 * time.Second,
-			TLS: &store.ClientTLSConfig{
-				CACertFile: caCert,
-				CertFile: clientCert,
-				KeyFile: clientKey,
-			},
+			TLS: &t.TLSClientConfig,
 		}
 	} else {
 		cfg = store.Config{
