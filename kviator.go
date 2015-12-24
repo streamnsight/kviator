@@ -70,9 +70,9 @@ func init() {
 	flag.StringVar(&kvstore, "kvstore", "", "the kvstore to connect to. Can be consul, etcd, or zookeper.")
 	flag.StringVar(&client, "client", "", "the client IP address")
 	flag.BoolVar(&showValue, "show-value", false, "show the value of the listed keys")
-	//flag.StringVar(&caCert, "ca-cert", "", "the path to the CA certificate to use for TLS")
-	//flag.StringVar(&clientCert, "client-cert", "", "the path to the client certificate to use for TLS")
-	//flag.StringVar(&clientKey, "client-key", "", "the path to the client key to use for TLS")
+	flag.StringVar(&caCert, "ca-cert", "", "the path to the CA certificate to use for TLS")
+	flag.StringVar(&clientCert, "client-cert", "", "the path to the client certificate to use for TLS")
+	flag.StringVar(&clientKey, "client-key", "", "the path to the client key to use for TLS")
 	flag.Usage = help
 	flag.Parse()
 }
