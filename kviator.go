@@ -142,7 +142,7 @@ func kvstoreConn(kvstore, client string) store.Store {
 	if caCert != "" && clientCert != "" && clientKey != "" {
 		cfg = store.Config{
 			ConnectionTimeout: 10 * time.Second,
-			ClientTLS: &store.ClientTLSConfig{
+			TLS: &store.ClientTLSConfig{
 				CACertFile: caCert,
 				CertFile: clientCert,
 				KeyFile: clientKey,
