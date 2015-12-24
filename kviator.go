@@ -12,7 +12,6 @@ import (
 
 	"github.com/docker/libkv"
 	"github.com/docker/libkv/store"
-	"net/http"
 )
 
 const (
