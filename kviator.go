@@ -136,7 +136,7 @@ func kvstoreConn(kvstore, client string) store.Store {
 	case "zookeper":
 		backend = store.ZK
 	}
-/*
+
 	var cfg store.Config
 
 	if caCert != "" && clientCert != "" && clientKey != "" {
@@ -153,13 +153,14 @@ func kvstoreConn(kvstore, client string) store.Store {
 				ConnectionTimeout: 10 * time.Second,
 			}
 	}
-	*/
+
 	kv, err := libkv.NewStore(
 		backend,
 		[]string{client},
-		&store.Config{
-			ConnectionTimeout: 10 * time.Second,
-		},
+		&cfg,
+		//store.Config{
+		//	ConnectionTimeout: 10 * time.Second,
+		//},
 	)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
