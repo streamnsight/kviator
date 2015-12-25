@@ -165,7 +165,7 @@ func kvstoreConn(kvstore, client string) store.Store {
 	kv, err := libkv.NewStore(
 		backend,
 		[]string{client},
-		cfg,
+		&cfg,
 		//store.Config{
 		//	ConnectionTimeout: 10 * time.Second,
 		//},
