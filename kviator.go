@@ -12,6 +12,9 @@ import (
 
 	"github.com/docker/libkv"
 	"github.com/docker/libkv/store"
+	"github.com/docker/libkv/store/etcd"
+	"github.com/docker/libkv/store/consul"
+	"github.com/docker/libkv/store/zookeeper"
 )
 
 const (
@@ -133,12 +136,15 @@ func kvstoreConn(kvstore, client string) store.Store {
 	case "consul":
 		fmt.Println("using CONSUL")
 		backend = store.CONSUL
+		consul.Register()
 	case "etcd":
 		fmt.Println("using ETCD")
 		backend = store.ETCD
+		etcd.Register()
 	case "zookeper":
 		fmt.Println("using ZK")
 		backend = store.ZK
+		zookeeper.Register()
 	}
 
 	var cfg store.Config
