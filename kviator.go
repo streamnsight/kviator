@@ -157,6 +157,7 @@ func kvstoreConn(kvstore, client string) store.Store {
 			TLS: t.TLSClientConfig,
 		}
 	} else {
+		fmt.Fprintln("no TLS?")
 		cfg = store.Config{
 				ConnectionTimeout: 10 * time.Second,
 			}
