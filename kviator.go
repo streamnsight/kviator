@@ -134,15 +134,15 @@ func kvstoreConn(kvstore, client string) store.Store {
 	var backend store.Backend
 	switch kvstore {
 	case "consul":
-		fmt.Println("using CONSUL")
+		//fmt.Println("using CONSUL")
 		backend = store.CONSUL
 		consul.Register()
 	case "etcd":
-		fmt.Println("using ETCD")
+		//fmt.Println("using ETCD")
 		backend = store.ETCD
 		etcd.Register()
 	case "zookeper":
-		fmt.Println("using ZK")
+		//fmt.Println("using ZK")
 		backend = store.ZK
 		zookeeper.Register()
 	}
@@ -150,7 +150,7 @@ func kvstoreConn(kvstore, client string) store.Store {
 	var cfg store.Config
 
 	if caCert != "" && clientCert != "" && clientKey != "" {
-		fmt.Println("Setup with TLS")
+		//fmt.Println("Setup with TLS")
 		var tlsInfo = transport.TLSInfo{
 			CAFile:   caCert,
 			CertFile: clientCert,
@@ -166,14 +166,14 @@ func kvstoreConn(kvstore, client string) store.Store {
 		}
 
 		t, err := transport.NewTransport(tlsInfo, 10 * time.Second)
-		fmt.Println(err)
-		fmt.Println(t)
+		//fmt.Println(err)
+		//fmt.Println(t)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 
-		fmt.Println(t.TLSClientConfig)
+		//fmt.Println(t.TLSClientConfig)
 
 		cfg = store.Config{
 			ConnectionTimeout: 10 * time.Second,
@@ -181,7 +181,7 @@ func kvstoreConn(kvstore, client string) store.Store {
 			ClientTLS: &clientTLSConfig,
 		}
 	} else {
-		fmt.Println("no TLS?")
+		//fmt.Println("no TLS?")
 		cfg = store.Config{
 				ConnectionTimeout: 10 * time.Second,
 			}
