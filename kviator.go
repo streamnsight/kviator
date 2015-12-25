@@ -153,6 +153,12 @@ func kvstoreConn(kvstore, client string) store.Store {
 			ClientCertAuth: true,
 		}
 
+		var clientTLSConfig = store.ClientTLSConfig{
+			CertFile: clientCert,
+			KeyFile: clientKey,
+			CACertFile: caCert,
+		}
+
 		t, err := transport.NewTransport(tlsInfo, 10 * time.Second)
 		fmt.Println(err)
 		fmt.Println(t)
@@ -166,7 +172,7 @@ func kvstoreConn(kvstore, client string) store.Store {
 		cfg = store.Config{
 			ConnectionTimeout: 10 * time.Second,
 			TLS: t.TLSClientConfig,
-			//ClientTLS: &tlsInfo,
+			ClientTLS: &clientTLSConfig,
 		}
 	} else {
 		fmt.Println("no TLS?")
