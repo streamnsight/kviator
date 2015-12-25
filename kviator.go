@@ -147,7 +147,11 @@ func kvstoreConn(kvstore, client string) store.Store {
 			KeyFile:  clientKey,
 		}
 
-		t, _ := transport.NewTransport(tlsInfo, 10 * time.Second)
+		t, err := transport.NewTransport(tlsInfo, 10 * time.Second)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
 		cfg = store.Config{
 			ConnectionTimeout: 10 * time.Second,
 			TLS: t.TLSClientConfig,
