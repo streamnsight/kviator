@@ -149,6 +149,7 @@ func kvstoreConn(kvstore, client string) store.Store {
 		}
 
 		t, err := transport.NewTransport(tlsInfo, 10 * time.Second)
+		fmt.Println(err)
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
