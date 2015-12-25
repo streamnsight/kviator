@@ -141,6 +141,7 @@ func kvstoreConn(kvstore, client string) store.Store {
 	var cfg store.Config
 
 	if caCert != "" && clientCert != "" && clientKey != "" {
+		fmt.Println("Setup with TLS")
 		var tlsInfo = transport.TLSInfo{
 			CAFile:   caCert,
 			CertFile: clientCert,
@@ -157,7 +158,7 @@ func kvstoreConn(kvstore, client string) store.Store {
 			TLS: t.TLSClientConfig,
 		}
 	} else {
-		fmt.Fprintln("no TLS?")
+		fmt.Println("no TLS?")
 		cfg = store.Config{
 				ConnectionTimeout: 10 * time.Second,
 			}
