@@ -138,7 +138,7 @@ func kvstoreConn(kvstore, client string) store.Store {
 		backend = store.ZK
 	}
 
-	var cfg store.Config
+	var cfg *store.Config
 
 	if caCert != "" && clientCert != "" && clientKey != "" {
 		var tlsInfo = transport.TLSInfo{
@@ -152,12 +152,12 @@ func kvstoreConn(kvstore, client string) store.Store {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
-		cfg = store.Config{
+		cfg = *store.Config{
 			ConnectionTimeout: 10 * time.Second,
 			TLS: t.TLSClientConfig,
 		}
 	} else {
-		cfg = store.Config{
+		cfg = *store.Config{
 				ConnectionTimeout: 10 * time.Second,
 			}
 	}
