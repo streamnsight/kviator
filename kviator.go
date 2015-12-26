@@ -134,15 +134,12 @@ func kvstoreConn(kvstore, client string) store.Store {
 	var backend store.Backend
 	switch kvstore {
 	case "consul":
-		//fmt.Println("using CONSUL")
 		backend = store.CONSUL
 		consul.Register()
 	case "etcd":
-		//fmt.Println("using ETCD")
 		backend = store.ETCD
 		etcd.Register()
 	case "zookeper":
-		//fmt.Println("using ZK")
 		backend = store.ZK
 		zookeeper.Register()
 	}
